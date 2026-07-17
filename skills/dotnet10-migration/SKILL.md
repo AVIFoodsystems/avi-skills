@@ -1,7 +1,7 @@
 ---
 name: dotnet10-migration
 description: This skill should be used when the user asks to "plan a .NET 10 migration", "migrate an API to .NET 10", "create migration stories", "break a .NET Framework API migration into GitHub issues", or names an AVIFoodsystems legacy API (.NET Framework, .NET Core 2.1, etc.) to be migrated to the AVI gRPC .NET 10 stack. Produces a full set of GitHub Project iteration stories via the github-project-iteration-issue skill.
-version: 0.1.0
+version: 0.1.1
 ---
 
 # .NET 10 Migration Story Planner
@@ -24,7 +24,7 @@ Collect these before doing anything else. If any are missing from the invocation
 | Project number | e.g. `3` | GitHub Project v2 board number for story assignment |
 | Iteration title | e.g. `Iteration 3 - 2026` | Iteration to place stories in; ask whether all stories go in one iteration or split across several by phase |
 | Labels | e.g. `AdjustmentSales,tech-debt` | Extra labels beyond the mandatory `backlog` and `needs triage` |
-| Database strategy | `same-db` or `modernize` | Does the new API point at the same database unchanged, or is data-layer modernization (sprocs → EF/LINQ, view retirement) in scope? Changes every Phase 3 story's Proposed solution — do not let stories assume differently. |
+| Database strategy | `same-db` or `modernize` | `same-db` means the database is an **immutable contract**: EF migrations disabled, no schema changes ever originate from the API. `modernize` puts data-layer changes (sprocs → EF/LINQ, view retirement) in scope. Changes every Phase 3 story's Proposed solution — do not let stories assume differently. |
 | Database access | connection string, `psql`/`sqlcmd` target, or a schema dump | Needed for the database inventory step; if no live access is available, ask for a schema export |
 
 The Main Entity seeds the initial scaffolding only. APIs usually have multiple entities, typically one per controller in the origin repo — discover the rest by inventorying the origin repository.
@@ -45,7 +45,7 @@ The Main Entity seeds the initial scaffolding only. APIs usually have multiple e
 
 - **Phase 1 (Scaffold):** one story. Acceptance criteria from `references/template-usage.md`.
 - **Phase 2 (Cleanup):** one story.
-- **Phase 3 (Endpoint migration):** **one story per endpoint**, ordered simplest first. Each story's acceptance criteria must cover: proto rpc + message definitions with doc comments (JSON transcoding → OpenAPI), gRPC service override in the API layer, BLL service method, DAL repo method, and unit tests per `references/conventions.md`. Each story must also include a **Database context block** (in Additional context): the database objects touched, the endpoint's result-set projection with column types and nullability, proto field mapping notes for lossy types (decimal, datetime, nullable columns), and a link to the committed schema snapshot. Never leave an implementing agent to guess column names or DTO shapes — proto messages derive from the actual query projection, not the entity table.
+- **Phase 3 (Endpoint migration):** **one story per endpoint**, ordered simplest first. Each story's acceptance criteria must cover: proto rpc + message definitions with doc comments (JSON transcoding → OpenAPI), gRPC service override in the API layer, BLL service method, DAL repo method, and unit tests per `references/conventions.md`. Each story must also include a **Database context block** (in Additional context): the database objects touched, the endpoint's result-set projection with column types and nullability, proto field mapping notes for lossy types (decimal, datetime, nullable columns), a link to the committed schema snapshot, and the **ORM mapping decision** from the decision tree in `references/database-inventory.md` (EF Core is mandated; ADO.NET only where the tree permits — keyless writes and sproc execution). Legacy tables often lack primary keys and enforced foreign keys; the planner makes the mapping call once, backed by the schema health check, so the implementing agent implements rather than diagnoses. Never leave an implementing agent to guess column names, DTO shapes, or whether EF can track a table — proto messages derive from the actual query projection, not the entity table.
 - **Phase 4 (Integration + E2E tests):** one story per entity/controller group for XUnit integration tests, plus one story for the Postman E2E collection.
 - **Phase 5 (Docs + deployment):** two stories — documentation (README, Dockerfile) and deployment (terraform + helm to Kubernetes).
 
