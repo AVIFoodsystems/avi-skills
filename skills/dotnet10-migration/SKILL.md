@@ -55,7 +55,7 @@ Every story must state its phase, its dependencies (Phase 3 stories depend on Ph
 
 Story titles and bodies must follow the `github-project-iteration-issue` skill's formatting rules exactly — that skill is the authority; do not restate or improvise the format. In particular:
 
-- **Titles:** conventional commit format `<prefix>(<scope>): <description>` using a scope discovered in workflow step 3. Migration stories are typically `feat(<scope>)` for endpoint migrations, `build(<scope>)` for scaffolding, `test(<scope>)` for Phase 4, `docs`/`ci` for Phase 5.
+- **Titles:** conventional commit format `<prefix>(<scope>): <description>` using a scope discovered in the scope-discovery workflow step. Migration stories are typically `feat(<scope>)` for endpoint migrations, `build(<scope>)` for scaffolding, `test(<scope>)` for Phase 4, `docs`/`ci` for Phase 5.
 - **Body:** the five required sections (Description, Proposed solution, Additional context, User Story, Acceptance Criteria). Express the Phase 3 layer-by-layer checklist as GIVEN/WHEN/THEN items in the Acceptance Criteria section, and put the proto/service/BLL/DAL breakdown in Proposed solution.
 - **Additional context:** link each story to the origin repo's controller/endpoint source being migrated, and to its blocking stories.
 - **Labels:** `backlog` and `needs triage` are mandatory (the dependency skill adds them); pass the user-supplied extras on top.

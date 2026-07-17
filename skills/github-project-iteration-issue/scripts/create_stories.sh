@@ -2,29 +2,33 @@
 set -euo pipefail
 
 # ---------- Inputs ----------
-DEFAULT_ISSUE_TITLE="build(all): Upgrade to .NET 10 and add AVI.ApiHelpers"
-ISSUE_TITLE="${ISSUE_TITLE:-$DEFAULT_ISSUE_TITLE}"
+ISSUE_TITLE="${ISSUE_TITLE:-}"
 ISSUE_BODY="${ISSUE_BODY:-}"
 ISSUE_BODY_FILE="${ISSUE_BODY_FILE:-}"
 OWNER="${OWNER:-AVIFoodsystems}"
-REPO="${REPO:-auth}"
-PROJECT_NUMBER="${PROJECT_NUMBER:-3}"
-ITERATION_TITLE="${ITERATION_TITLE:-Iteration 3 - 2026}"
-LABELS="${LABELS:-Auth,tech-debt}"
+REPO="${REPO:-}"
+PROJECT_NUMBER="${PROJECT_NUMBER:-}"
+ITERATION_TITLE="${ITERATION_TITLE:-}"
+LABELS="${LABELS:-}"
+# Always applied in addition to LABELS; never replaced.
+MANDATORY_LABELS="backlog,needs triage"
 
 usage() {
   cat <<'USAGE'
 Usage: create_stories.sh [options]
 
-Options:
+Required:
   --title "..."             Issue title (or set ISSUE_TITLE env var)
-  --body "..."              Issue body text (or set ISSUE_BODY env var)
-  --body-file <path|->      Issue body file path; use "-" to read from stdin
+  --body "..." | --body-file <path|->
+                            Issue body text, file path, or "-" for stdin
+  --repo <repo>             Repo name (or REPO env var)
+  --project <number>        Project number (or PROJECT_NUMBER env var)
+  --iteration "<title>"     Iteration title (or ITERATION_TITLE env var)
+
+Optional:
   --owner <owner>           Repo owner (default: AVIFoodsystems)
-  --repo <repo>             Repo name (default: auth)
-  --project <number>        Project number (default: 3)
-  --iteration "<title>"     Iteration title (default: Iteration 3 - 2026)
-  --labels "a,b"            Comma-separated labels (default: Auth,tech-debt)
+  --labels "a,b"            Extra comma-separated labels; "backlog" and
+                            "needs triage" are always added
   -h, --help                Show help
 
 Env vars override defaults; CLI options override env vars.
@@ -87,17 +91,27 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-if [[ -z "$ISSUE_TITLE" ]]; then
-  echo "ISSUE_TITLE is required."
+MISSING=""
+[[ -z "$ISSUE_TITLE" ]] && MISSING+=" --title"
+[[ -z "$REPO" ]] && MISSING+=" --repo"
+[[ -z "$PROJECT_NUMBER" ]] && MISSING+=" --project"
+[[ -z "$ITERATION_TITLE" ]] && MISSING+=" --iteration"
+[[ -z "$ISSUE_BODY" && -z "$ISSUE_BODY_FILE" ]] && MISSING+=" --body/--body-file"
+if [[ -n "$MISSING" ]]; then
+  echo "Missing required arguments:$MISSING"
+  usage
   exit 1
 fi
 
-# ---------- 1️⃣  Build the issue body ----------
+# ---------- 1: Build the issue body ----------
 BODY_FILE=""
+TMP_BODY_FILE=""
+cleanup() { [[ -n "$TMP_BODY_FILE" ]] && rm -f "$TMP_BODY_FILE"; }
+trap cleanup EXIT
 if [[ -n "$ISSUE_BODY_FILE" ]]; then
   if [[ "$ISSUE_BODY_FILE" == "-" ]]; then
-    BODY_FILE="/tmp/.stories/issue-$(date +%s).md"
-    mkdir -p "$(dirname "$BODY_FILE")"
+    TMP_BODY_FILE=$(mktemp -t issue-body.XXXXXX)
+    BODY_FILE="$TMP_BODY_FILE"
     cat > "$BODY_FILE"
   elif [[ -f "$ISSUE_BODY_FILE" ]]; then
     BODY_FILE="$ISSUE_BODY_FILE"
@@ -105,62 +119,19 @@ if [[ -n "$ISSUE_BODY_FILE" ]]; then
     echo "Body file not found: $ISSUE_BODY_FILE"
     exit 1
   fi
-elif [[ -n "$ISSUE_BODY" ]]; then
-  BODY_FILE="/tmp/.stories/issue-$(date +%s).md"
-  mkdir -p "$(dirname "$BODY_FILE")"
-  printf '%s\n' "$ISSUE_BODY" > "$BODY_FILE"
 else
-  BODY_FILE="/tmp/.stories/issue-$(date +%s).md"
-  mkdir -p "$(dirname "$BODY_FILE")"
-
-  cat > "$BODY_FILE" <<'EOF'
-## Description
-Upgrade the Authentication repository to .NET 10 and replace the hand‑rolled CORS and authentication logic with the AVI.ApiHelpers package in both the Authentication and Users projects.  
-This will standardize the APIs with the rest of the system.
-
-## Proposed solution
-- Update the target framework in `Authentication.csproj` and `Users.csproj` to `net10.0`.  
-- Add the `AVI.ApiHelpers` NuGet package reference to both projects.  
-- Refactor `Program.cs` in each project:
-  - Remove the existing CORS and auth middleware.  
-  - Add `builder.Services.AddCors(...)` and `builder.Services.AddAuthentication(...)` via the helpers.  
-  - Configure the middleware pipeline with `app.UseCors(...)` and `app.UseAuthentication()`.  
-- Update Dockerfiles to use the .NET 10 SDK/runtime images.  
-- Adjust CI pipeline (`.github/workflows/*`) to build against .NET 10.  
-- Run the full test suite and fix any regressions.  
-- Update any environment‑specific configuration (e.g., `appsettings.Development.json`) to match the new helper usage.
-
-## Additional context
-- **Package docs**: https://internal.company.com/docs/AVI.ApiHelpers  
-- **Affected environments**: dev, staging, prod  
-- **Dependencies**: Docker, GitHub Actions, Azure App Service  
-- **Related work**: None yet – this is a tech‑debt cleanup.
-
-## User Story
-- As a **developer**, when I run the Authentication service, I expect it to use the standardized CORS and authentication middleware provided by AVI.ApiHelpers.  
-- As a **DevOps engineer**, when I deploy the service, I expect the Docker image to be built with .NET 10 and the CI pipeline to succeed.
-
-## Acceptance Criteria
-- [ ] GIVEN the repo is upgraded, WHEN I run `dotnet build`, THEN the build succeeds without errors.  
-- [ ] GIVEN the repo is upgraded, WHEN I run `dotnet test`, THEN all tests pass.  
-- [ ] GIVEN the service is running, WHEN I send a cross‑origin request, THEN the correct CORS headers are returned.  
-- [ ] GIVEN the service is running, WHEN I authenticate a request, THEN the authentication middleware from AVI.ApiHelpers is invoked.  
-- [ ] GIVEN the service is running, WHEN I inspect logs, THEN I see “AVI.ApiHelpers initialized” entries.  
-- [ ] Performance: response time for authenticated requests < 200 ms under 100 concurrent users.  
-- [ ] The Docker image is built from the .NET 10 SDK/runtime images.  
-- [ ] CI pipeline passes on all branches.
-
-EOF
-
+  TMP_BODY_FILE=$(mktemp -t issue-body.XXXXXX)
+  BODY_FILE="$TMP_BODY_FILE"
+  printf '%s\n' "$ISSUE_BODY" > "$BODY_FILE"
 fi
 
-# ---------- 2️⃣  Create the issue ----------
-# Create the issue
+# ---------- 2: Create the issue ----------
+ALL_LABELS="$MANDATORY_LABELS${LABELS:+,$LABELS}"
 ISSUE_CREATE_OUTPUT=$(gh issue create \
   --repo "$OWNER/$REPO" \
   --title "$ISSUE_TITLE" \
   --body-file "$BODY_FILE" \
-  --label "$LABELS" 2>&1)
+  --label "$ALL_LABELS" 2>&1)
 printf '%s\n' "$ISSUE_CREATE_OUTPUT"
 
 ISSUE_URL=$(printf '%s\n' "$ISSUE_CREATE_OUTPUT" | grep -Eo 'https://github.com/[^ ]+/issues/[0-9]+' | tail -n 1 || true)

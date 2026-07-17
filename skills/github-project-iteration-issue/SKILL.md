@@ -1,5 +1,6 @@
 ---
 name: github-project-iteration-issue
+version: 0.1.0
 description: Create GitHub issues and assign them to a specific Project v2 board iteration using a reusable `gh` CLI script. Use for LLM-driven story creation where the model provides the issue title/body and needs the item added to a project and placed into a named iteration.
 ---
 
@@ -12,17 +13,16 @@ Create a GitHub issue, add it to a project board, and set the Iteration field.
 - Script path: `scripts/create_stories.sh` (relative to this skill's directory)
 
 ## Inputs
-Required:
+Required (script exits with usage if missing):
 - `ISSUE_TITLE`
-
-Optional (defaults shown in the script):
-- `ISSUE_BODY` (raw text)
-- `ISSUE_BODY_FILE` (path or `-` for stdin)
-- `OWNER`
+- `ISSUE_BODY` (raw text) or `ISSUE_BODY_FILE` (path or `-` for stdin)
 - `REPO`
 - `PROJECT_NUMBER`
 - `ITERATION_TITLE`
-- `LABELS`
+
+Optional:
+- `OWNER` (default: `AVIFoodsystems`)
+- `LABELS` — extras only; the script always adds `backlog` and `needs triage`
 
 ## Preferred input methods
 - Use `--body-file -` and send the body via stdin for multi-line content.
@@ -36,7 +36,10 @@ Optional (defaults shown in the script):
 printf '%s' "$BODY" | <skill-dir>/scripts/create_stories.sh \
   --title "$TITLE" \
   --body-file - \
-  --iteration "Iteration 3 - 2026"
+  --repo "$REPO" \
+  --project "$PROJECT_NUMBER" \
+  --iteration "Iteration 3 - 2026" \
+  --labels "AdjustmentSales,tech-debt"
 ```
 
 ## Story Formatting Requirements
@@ -65,7 +68,7 @@ If critical information is missing, ask targeted questions immediately. Required
 - OWNER (GitHub org or user)
 - REPO (repository name)
 - PROJECT_NUMBER (for project board assignment)
-- ITERATION_NUMBER (for project board iteration assignment)
+- ITERATION_TITLE (for project board iteration assignment)
 - Valid scopes from the repository's `.github/workflows/pull-request.yml` file (check line 17 or similar configuration)
 
 ## Conventional Commit Title Rules
