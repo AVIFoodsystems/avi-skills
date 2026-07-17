@@ -8,20 +8,20 @@ Each endpoint is segregated across layers, organized into logical modules:
 
 ```
 /backend/src/
-  /BusinessDomain/
-    /AVI.BusinessDomain.API/
+  /BusinessDomain/       (own .sln per domain — see core-apis/backend/src/Employees)
+    /BusinessDomain.API/
       /Services/
         EntityGrpcService.cs
           public override EntityDetail GetEntities(GetEntitiesRequest request, ServerCallContext context)
-    /AVI.BusinessDomain.BLL/
+    /BusinessDomain.BLL/
       /Services/
         EntityService.cs
           public EntityDetail GetEntities(GetEntitiesRequest request)
-    /AVI.BusinessDomain.DAL/
+    /BusinessDomain.DAL/
       /Repos/
         EntityRepo.cs
           public EntityDetail GetEntities(GetEntitiesRequest request)
-    /AVI.BusinessDomain.Core/
+    /BusinessDomain.Core/
       /Models/
         Entity.cs
       /Protos/
@@ -32,6 +32,7 @@ Each endpoint is segregated across layers, organized into logical modules:
 
 - **EF Core is the mandated ORM.** The DAL `Repos/` methods use EF Core by default.
 - **ADO.NET is the only sanctioned fallback**, allowed in exactly two cases: executing stored procedures, and writes to tables EF cannot safely track (no primary key and no unique candidate key). Record the fallback decision in the story — never leave it to the implementing agent.
+- Migrated domains in core-apis that own their tables (`modernize` strategy, e.g. Employees) legitimately use EF migrations against **their own** schema — do not copy that pattern into a `same-db` migration just because the exemplar has a `Migrations/` folder.
 - **The legacy database is an immutable contract under the `same-db` strategy.** EF migrations are disabled; the API never originates schema changes. Never run `dotnet ef migrations` against the legacy database — EF will attempt to add the constraints the schema is missing and fail (or worse) against data that violates them.
 - Legacy AVI databases frequently lack primary keys and enforced foreign keys. Every entity mapping decision comes from the schema health check in `database-inventory.md`, expressed in fluent configuration (logical `HasKey`, `HasNoKey`, explicit navigations or their deliberate absence).
 

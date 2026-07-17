@@ -36,3 +36,4 @@ After testing and refinement:
 - Document the API via README.md files.
 - Generate the Dockerfile.
 - Deploy to production via terraform with helm charts to Kubernetes.
+- Decommission the legacy API. What that means depends on the generation: **.NET Framework APIs are IIS sites** (remove the site/app pool on the Windows host); **.NET Core 2.1/2.2 APIs already run in Kubernetes** (retire their deployment/ingress). Cutover requires repointing known consumers first — see the Phase 1c consumer inventory.
