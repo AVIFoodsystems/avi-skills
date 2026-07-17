@@ -1,7 +1,7 @@
 ---
 name: dotnet10-migration
 description: This skill should be used when the user asks to "plan a .NET 10 migration", "migrate an API to .NET 10", "create migration stories", "break a .NET Framework API migration into GitHub issues", or names an AVIFoodsystems legacy API (.NET Framework, .NET Core 2.1, etc.) to be migrated to the AVI gRPC .NET 10 stack. Produces a full set of GitHub Project iteration stories via the github-project-iteration-issue skill.
-version: 0.1.2
+version: 0.1.3
 ---
 
 # .NET 10 Migration Story Planner
@@ -18,7 +18,7 @@ Collect these before doing anything else. If any are missing from the invocation
 |---|---|---|
 | Source framework | .NET Framework 4.8, .NET Core 2.1 | The origin API's runtime |
 | Origin repository | `https://github.com/AVIFoodsystems/<origin_repo_name>` | Legacy API source |
-| Destination repository | `https://github.com/AVIFoodsystems/<destination_repo_name>` | New .NET 10 repo |
+| Destination repository | usually `https://github.com/AVIFoodsystems/core-apis` | Migrated APIs live in the **core-apis monorepo** as a new domain folder under `/backend/src/<BusinessDomain>/` with its own `.sln` (see Employees, Vendors, Items, Accounts, Branches there). A standalone destination repo is the exception — confirm before assuming one. In core-apis, `/backend/` is the canonical tree; the top-level `/Core.Apis/` tree is a stale duplicate — never add code there. |
 | Business Domain | e.g. `AdjustmentSales` | Overall API name; referred to as `BusinessDomain` in references |
 | Main Entity | e.g. `AdjustmentSalesReason` | Seeds the template scaffold (`-S` flag); referred to as `Entity` in references |
 | Project number | e.g. `3` | GitHub Project v2 board number for story assignment |
@@ -37,10 +37,11 @@ The Main Entity seeds the initial scaffolding only. APIs usually have multiple e
 3. **Inventory the database.** For each endpoint, enumerate the database objects it touches (tables, views, stored procedures, functions) and extract their definitions from the live database or schema export — see `references/database-inventory.md` for the queries and snapshot format. Commit the resulting schema snapshot to the destination repo at `/backend/docs/db/schema-snapshot.md`; Phase 3 stories link to it rather than embedding schema dumps. This context lives only in the database, not in any repo checkout — implementing agents cannot discover it themselves.
 4. **Rank endpoints.** Order from simplest to most complex, weighing **both** the C# surface and the SQL behind it — a three-line controller action calling a 400-line stored procedure is not simple. Flag heavy-sproc endpoints; consider splitting them into "migrate sproc logic" and "wire endpoint" stories. This ordering drives Phase 3 story sequencing.
 5. **Discover valid title scopes.** Check the destination repo's `.github/workflows/pull-request.yml` for the list of valid conventional-commit scopes (typically around line 17). Story titles must use a valid scope, or omit the scope if the repo has none.
-6. **Load the migration plan.** Read `references/migration-phases.md` for the five-phase plan and `references/conventions.md` for the code and test conventions that story acceptance criteria must encode.
-7. **Draft the story list.** Apply the granularity and formatting rules below. Present the full draft list (titles + one-line summaries) to the user for review before creating anything.
-8. **Create the stories.** Invoke the `github-project-iteration-issue` skill to create each approved story, in phase order. Pass the destination repo, project number, iteration title, and labels collected above; send each body via `--body-file -` on stdin.
-9. **Report.** Summarize what was created with issue numbers and flag any endpoints that were ambiguous or excluded.
+6. **Study a migrated exemplar.** Read one completed migration in core-apis (`backend/src/Employees` is the richest: EF Core DAL with `DataAccess/` + `Repos/`, `Protos/employees.proto`, Dockerfile in the API project, `ServiceRegistrations.cs`, Sentry wiring). Real migrated code outranks abstract conventions wherever they disagree — and stories should link the exemplar so implementing agents pattern-match against it.
+7. **Load the migration plan.** Read `references/migration-phases.md` for the five-phase plan and `references/conventions.md` for the code and test conventions that story acceptance criteria must encode.
+8. **Draft the story list.** Apply the granularity and formatting rules below. Present the full draft list (titles + one-line summaries) to the user for review before creating anything.
+9. **Create the stories.** Invoke the `github-project-iteration-issue` skill to create each approved story, in phase order. Pass the destination repo, project number, iteration title, and labels collected above; send each body via `--body-file -` on stdin.
+10. **Report.** Summarize what was created with issue numbers and flag any endpoints that were ambiguous or excluded.
 
 ## Story Granularity Rules
 
