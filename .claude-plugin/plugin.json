@@ -1,0 +1,10 @@
+{
+  "name": "avi-migration",
+  "version": "0.1.0",
+  "description": "Plan AVI Foodsystems .NET 10 API migrations and create developer-ready GitHub Project iteration stories",
+  "author": {
+    "name": "Randall Sclapper",
+    "email": "randall@applaud-technologies.com"
+  },
+  "keywords": ["avi", "dotnet", "migration", "github-projects", "stories"]
+}
