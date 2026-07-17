@@ -28,6 +28,13 @@ Each endpoint is segregated across layers, organized into logical modules:
         entity.proto
 ```
 
+## Data Access
+
+- **EF Core is the mandated ORM.** The DAL `Repos/` methods use EF Core by default.
+- **ADO.NET is the only sanctioned fallback**, allowed in exactly two cases: executing stored procedures, and writes to tables EF cannot safely track (no primary key and no unique candidate key). Record the fallback decision in the story — never leave it to the implementing agent.
+- **The legacy database is an immutable contract under the `same-db` strategy.** EF migrations are disabled; the API never originates schema changes. Never run `dotnet ef migrations` against the legacy database — EF will attempt to add the constraints the schema is missing and fail (or worse) against data that violates them.
+- Legacy AVI databases frequently lack primary keys and enforced foreign keys. Every entity mapping decision comes from the schema health check in `database-inventory.md`, expressed in fluent configuration (logical `HasKey`, `HasNoKey`, explicit navigations or their deliberate absence).
+
 ## gRPC Service Pattern
 
 - All endpoints are gRPC endpoints. Service classes inherit from the generated gRPC base class (e.g. `EntitiesGrpc.EntitiesGrpcBase`).
