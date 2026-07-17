@@ -1,0 +1,15 @@
+{
+  "name": "avi-skills",
+  "owner": {
+    "name": "Applaud Technologies",
+    "email": "randall@applaud-technologies.com"
+  },
+  "plugins": [
+    {
+      "name": "avi-migration",
+      "source": "./",
+      "description": "Plan AVI .NET 10 API migrations and create developer-ready GitHub Project iteration stories",
+      "category": "workflow"
+    }
+  ]
+}
