@@ -1,7 +1,7 @@
 ---
 name: dotnet10-migration
 description: This skill should be used when the user asks to "plan a .NET 10 migration", "migrate an API to .NET 10", "create migration stories", "break a .NET Framework API migration into GitHub issues", or names an AVIFoodsystems legacy API (.NET Framework, .NET Core 2.1, etc.) to be migrated to the AVI gRPC .NET 10 stack. Produces a full set of GitHub Project iteration stories via the github-project-iteration-issue skill.
-version: 0.1.3
+version: 0.1.4
 ---
 
 # .NET 10 Migration Story Planner
@@ -32,7 +32,7 @@ The Main Entity seeds the initial scaffolding only. APIs usually have multiple e
 
 ## Workflow
 
-1. **Preflight.** Verify `gh auth status` shows an active credential with the `project` scope. If the active token is a `GITHUB_TOKEN` env var without it, run story-creation commands with `env -u GITHUB_TOKEN` so `gh` falls back to the keyring credential, or have the user run `gh auth refresh -s project`.
+1. **Preflight.** Verify `gh auth status` shows an active credential with the `project` scope. If the active token is a `GITHUB_TOKEN` env var without it, run story-creation commands with `env -u GITHUB_TOKEN` so `gh` falls back to the keyring credential, or have the user run `gh auth refresh -s project`. Also verify every label the stories will use exists in the destination repo (`gh label list`) — the domain label for a new migration typically does not exist yet; create it with a color matching the sibling domain labels before creating any story.
 2. **Inventory the origin repository.** Clone or fetch the origin repo. First determine the **canonical source tree** — legacy repos may contain duplicate project copies, multiple `.sln` files, or dead code; confirm with the user which tree is authoritative before counting endpoints. Then enumerate controllers, endpoints per controller, and the entities they operate on. Also record: the hosting model (System.Web/IIS vs Kestrel), HTTP-layer auth (legacy APIs typically have **none** — anonymous endpoints relying on network placement), where connection strings live (often hardcoded in source, pointing at production with `Trusted_Connection`), and — for inline-SQL codebases — the exact SELECT lists in repo classes plus any **code-side computed fields** added during row-to-model mapping (these are part of the endpoint's contract and must appear in proto messages).
 3. **Inventory the database.** For each endpoint, enumerate the database objects it touches (tables, views, stored procedures, functions) and extract their definitions from the live database or schema export — see `references/database-inventory.md` for the queries and snapshot format. Commit the resulting schema snapshot to the destination repo at `/backend/docs/db/schema-snapshot.md`; Phase 3 stories link to it rather than embedding schema dumps. This context lives only in the database, not in any repo checkout — implementing agents cannot discover it themselves.
 4. **Rank endpoints.** Order from simplest to most complex, weighing **both** the C# surface and the SQL behind it — a three-line controller action calling a 400-line stored procedure is not simple. Flag heavy-sproc endpoints; consider splitting them into "migrate sproc logic" and "wire endpoint" stories. This ordering drives Phase 3 story sequencing.

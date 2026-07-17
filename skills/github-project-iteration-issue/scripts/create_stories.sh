@@ -127,11 +127,32 @@ fi
 
 # ---------- 2: Create the issue ----------
 ALL_LABELS="$MANDATORY_LABELS${LABELS:+,$LABELS}"
-ISSUE_CREATE_OUTPUT=$(gh issue create \
+
+# Verify every label exists first — gh issue create fails on unknown labels,
+# and under set -e that failure would otherwise be silent (see below).
+EXISTING_LABELS=$(gh label list --repo "$OWNER/$REPO" --limit 200 --json name --jq '.[].name')
+MISSING_LABELS=""
+IFS=',' read -ra _lbls <<<"$ALL_LABELS"
+for _l in "${_lbls[@]}"; do
+  grep -qxF "$_l" <<<"$EXISTING_LABELS" || MISSING_LABELS+="${_l}, "
+done
+if [[ -n "$MISSING_LABELS" ]]; then
+  echo "Labels missing in $OWNER/$REPO: ${MISSING_LABELS%, }"
+  echo "Create them first: gh label create \"<name>\" --repo $OWNER/$REPO --color <hex>"
+  exit 1
+fi
+
+# Guard the command substitution: with set -e, a bare VAR=$(gh ...) that fails
+# aborts the script before any error output is printed.
+if ! ISSUE_CREATE_OUTPUT=$(gh issue create \
   --repo "$OWNER/$REPO" \
   --title "$ISSUE_TITLE" \
   --body-file "$BODY_FILE" \
-  --label "$ALL_LABELS" 2>&1)
+  --label "$ALL_LABELS" 2>&1); then
+  echo "gh issue create failed:"
+  printf '%s\n' "$ISSUE_CREATE_OUTPUT"
+  exit 1
+fi
 printf '%s\n' "$ISSUE_CREATE_OUTPUT"
 
 ISSUE_URL=$(printf '%s\n' "$ISSUE_CREATE_OUTPUT" | grep -Eo 'https://github.com/[^ ]+/issues/[0-9]+' | tail -n 1 || true)
