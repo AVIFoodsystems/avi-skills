@@ -9,6 +9,9 @@ From the origin repo's DAL code, list every table, view, stored procedure, and f
 - Raw SQL strings and Dapper queries (`FROM`, `JOIN`, `EXEC`, `sp_`)
 - EF `DbSet` mappings, `[Table]`/`[Column]` attributes, and `ToTable`/`ToView` fluent config
 - `SqlCommand` / `CommandType.StoredProcedure` usages
+- Hand-rolled ADO helpers (e.g. a shared `SQLbasic`-style class) — the SELECT lists in repo classes are the authoritative projections for inline-SQL codebases
+
+Record objects with **full three-part names**. Legacy AVI queries routinely cross databases (`WEB..employee` from a connection whose initial catalog is `Options`) — the snapshot and the app-user grants must cover **every database touched**, not just the connection's default catalog. Also record any **code-side computed fields** the legacy mapping layer adds (fields assembled in C# during row-to-model mapping); they are part of the endpoint contract even though no database column backs them.
 
 ## Step 2: Extract Definitions
 
@@ -142,7 +145,26 @@ Include in each Phase 3 story's **Additional context** section:
   | ModifiedUtc | datetime2 | yes | google.protobuf.Timestamp |
 - Database strategy: same-db — call `usp_GetEntities` unchanged from the DAL repo
 - Mapping decision: ADO.NET sproc call for reads; `dbo.Entity` writes via EF with logical key `HasKey(EntityId)` (uniqueness verified 2026-07-17)
+- Computed fields (from legacy mapping code, not the DB): `full_name` = first + ' ' + last; `last_name_first` — include in proto message
+- App user grants needed: SELECT on `dbo.vw_EntityDetail`, EXECUTE on `dbo.usp_GetEntities`
 ```
+
+## App User and Least-Privilege Grants
+
+Legacy APIs connect with Windows integrated auth (`Trusted_Connection`), which does not work from Linux containers on Kubernetes. AVI's direction is **SQL auth with a dedicated per-API app user** (e.g. `svc_BusinessDomain`).
+
+The inventory above already lists every object every endpoint touches — derive the app user's GRANT script directly from it instead of granting `db_datareader`/`db_datawriter` broadly:
+
+```sql
+CREATE LOGIN svc_BusinessDomain WITH PASSWORD = '<from-secret-store>';
+-- In EVERY database the inventory shows the API touching:
+CREATE USER svc_BusinessDomain FOR LOGIN svc_BusinessDomain;
+GRANT SELECT ON dbo.vw_EntityDetail TO svc_BusinessDomain;
+GRANT SELECT, INSERT, UPDATE ON dbo.Entity TO svc_BusinessDomain;
+GRANT EXECUTE ON dbo.usp_GetEntities TO svc_BusinessDomain;
+```
+
+Include the generated GRANT script in the Phase 1b story. Read-only endpoints get SELECT/EXECUTE only; add write grants per the endpoint inventory. The connection string is delivered via Kubernetes secrets — never committed to the repo (legacy repos hardcode production connection strings in source; treat those as findings to report, and as credentials rotation candidates once the app user replaces them).
 
 ## Proto Mapping Rules for Lossy Types
 
