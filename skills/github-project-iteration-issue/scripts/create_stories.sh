@@ -23,7 +23,8 @@ Required:
                             Issue body text, file path, or "-" for stdin
   --repo <repo>             Repo name (or REPO env var)
   --project <number>        Project number (or PROJECT_NUMBER env var)
-  --iteration "<title>"     Iteration title (or ITERATION_TITLE env var)
+  --iteration "<title>"     Iteration title, or "current" to auto-select the
+                            iteration active today (or ITERATION_TITLE env var)
 
 Optional:
   --owner <owner>           Repo owner (default: AVIFoodsystems)
@@ -125,7 +126,7 @@ else
   printf '%s\n' "$ISSUE_BODY" > "$BODY_FILE"
 fi
 
-# ---------- 2: Create the issue ----------
+# ---------- 2: Validate labels exist ----------
 ALL_LABELS="$MANDATORY_LABELS${LABELS:+,$LABELS}"
 
 # Verify every label exists first — gh issue create fails on unknown labels,
@@ -142,6 +143,82 @@ if [[ -n "$MISSING_LABELS" ]]; then
   exit 1
 fi
 
+# ---------- 3: Resolve and validate the project + iteration BEFORE creating anything ----------
+# Fail fast. gh project item-edit runs AFTER the issue is created, so an invalid iteration
+# (e.g. one that has rolled off the board) used to leave an orphaned, iteration-less issue.
+# All board lookups now happen here, before gh issue create.
+
+PROJECT_ID=$(gh project view "$PROJECT_NUMBER" --owner "$OWNER" --format json --jq '.id' 2>/dev/null || true)
+if [[ -z "$PROJECT_ID" || "$PROJECT_ID" == "null" ]]; then
+  echo "Project #$PROJECT_NUMBER not found for owner \"$OWNER\"."
+  exit 1
+fi
+
+OWNER_TYPE=$(gh api "users/$OWNER" --jq .type 2>/dev/null || true)
+if [[ -z "$OWNER_TYPE" || "$OWNER_TYPE" == "null" ]]; then
+  echo "Owner \"$OWNER\" not found."
+  exit 1
+fi
+
+# One query shape, parameterized by owner root (organization vs user).
+ITER_QUERY='
+  query($owner:String!, $number:Int!) {
+    OWNER_ROOT(login: $owner) {
+      projectV2(number: $number) {
+        fields(first: 50) {
+          nodes {
+            ... on ProjectV2IterationField {
+              id
+              name
+              configuration { iterations { id title startDate duration } }
+            }
+          }
+        }
+      }
+    }
+  }'
+case "$OWNER_TYPE" in
+  Organization)
+    ITERATION_DATA=$(gh api graphql -f query="${ITER_QUERY/OWNER_ROOT/organization}" -F owner="$OWNER" -F number="$PROJECT_NUMBER")
+    FIELD_PATH='.data.organization.projectV2.fields.nodes' ;;
+  User)
+    ITERATION_DATA=$(gh api graphql -f query="${ITER_QUERY/OWNER_ROOT/user}" -F owner="$OWNER" -F number="$PROJECT_NUMBER")
+    FIELD_PATH='.data.user.projectV2.fields.nodes' ;;
+  *)
+    echo "Unsupported owner type: $OWNER_TYPE"; exit 1 ;;
+esac
+
+ITERATION_FIELD_ID=$(jq -r "$FIELD_PATH | .[] | select(.name==\"Iteration\") | .id" <<<"$ITERATION_DATA")
+if [[ -z "$ITERATION_FIELD_ID" || "$ITERATION_FIELD_ID" == "null" ]]; then
+  echo "No Iteration field found in Project #$PROJECT_NUMBER."
+  exit 1
+fi
+
+if [[ "$ITERATION_TITLE" == "current" || "$ITERATION_TITLE" == "@current" ]]; then
+  # Auto-select the iteration whose [startDate, startDate+duration) window contains today.
+  TODAY="$(date +%Y-%m-%d)T00:00:00Z"
+  read -r ITERATION_ID ITERATION_TITLE < <(jq -r --arg today "$TODAY" \
+    "$FIELD_PATH | .[] | select(.name==\"Iteration\") | .configuration.iterations[]
+     | select(((.startDate + \"T00:00:00Z\")|fromdateiso8601) <= (\$today|fromdateiso8601)
+              and (\$today|fromdateiso8601) < (((.startDate + \"T00:00:00Z\")|fromdateiso8601) + (.duration*86400)))
+     | \"\(.id)\t\(.title)\"" <<<"$ITERATION_DATA" | head -n1) || true
+  if [[ -z "${ITERATION_ID:-}" ]]; then
+    echo "No iteration is active today ($(date +%Y-%m-%d)) in Project #$PROJECT_NUMBER. Available iterations:"
+    jq -r "$FIELD_PATH | .[] | select(.name==\"Iteration\") | .configuration.iterations[] | \"  - \(.title)\"" <<<"$ITERATION_DATA"
+    exit 1
+  fi
+else
+  ITERATION_ID=$(jq -r --arg title "$ITERATION_TITLE" \
+    "$FIELD_PATH | .[] | select(.name==\"Iteration\") | .configuration.iterations[] | select(.title==\$title) | .id" <<<"$ITERATION_DATA")
+  if [[ -z "$ITERATION_ID" || "$ITERATION_ID" == "null" ]]; then
+    echo "Iteration \"$ITERATION_TITLE\" not found in Project #$PROJECT_NUMBER. Available iterations:"
+    jq -r "$FIELD_PATH | .[] | select(.name==\"Iteration\") | .configuration.iterations[] | \"  - \(.title)\"" <<<"$ITERATION_DATA"
+    echo "Tip: pass --iteration current to auto-select the active iteration."
+    exit 1
+  fi
+fi
+
+# ---------- 4: Create the issue (labels and iteration already validated) ----------
 # Guard the command substitution: with set -e, a bare VAR=$(gh ...) that fails
 # aborts the script before any error output is printed.
 if ! ISSUE_CREATE_OUTPUT=$(gh issue create \
@@ -160,92 +237,14 @@ if [[ -z "$ISSUE_URL" ]]; then
   echo "Failed to parse issue URL from gh output."
   exit 1
 fi
-
 ISSUE_NUMBER="${ISSUE_URL##*/}"
 
-# ---------- 3️⃣  Add to Project #3 and set Iteration ----------
+# ---------- 5: Add to the project and set the iteration (IDs resolved in step 3) ----------
 ITEM_ID=$(gh project item-add "$PROJECT_NUMBER" \
   --owner "$OWNER" \
   --url "$ISSUE_URL" \
   --format json \
   --jq '.id')
-
-PROJECT_ID=$(gh project view "$PROJECT_NUMBER" --owner "$OWNER" --format json --jq '.id')
-
-OWNER_TYPE=$(gh api "users/$OWNER" --jq .type)
-if [[ -z "$OWNER_TYPE" || "$OWNER_TYPE" == "null" ]]; then
-  echo "Owner \"$OWNER\" not found."
-  exit 1
-fi
-
-if [[ "$OWNER_TYPE" == "Organization" ]]; then
-  ITERATION_DATA=$(gh api graphql -f query='
-    query($owner:String!, $number:Int!) {
-      organization(login: $owner) {
-        projectV2(number: $number) {
-          fields(first: 50) {
-            nodes {
-              ... on ProjectV2IterationField {
-                id
-                name
-                configuration {
-                  iterations {
-                    id
-                    title
-                    startDate
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }' -F owner="$OWNER" -F number="$PROJECT_NUMBER")
-  FIELD_PATH='.data.organization.projectV2.fields.nodes'
-elif [[ "$OWNER_TYPE" == "User" ]]; then
-  ITERATION_DATA=$(gh api graphql -f query='
-    query($owner:String!, $number:Int!) {
-      user(login: $owner) {
-        projectV2(number: $number) {
-          fields(first: 50) {
-            nodes {
-              ... on ProjectV2IterationField {
-                id
-                name
-                configuration {
-                  iterations {
-                    id
-                    title
-                    startDate
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }' -F owner="$OWNER" -F number="$PROJECT_NUMBER")
-  FIELD_PATH='.data.user.projectV2.fields.nodes'
-else
-  echo "Unsupported owner type: $OWNER_TYPE"
-  exit 1
-fi
-
-ITERATION_FIELD_ID=$(jq -r \
-  "$FIELD_PATH | .[] | select(.name==\"Iteration\") | .id" <<<"$ITERATION_DATA")
-
-ITERATION_ID=$(jq -r --arg title "$ITERATION_TITLE" \
-  "$FIELD_PATH | .[] | select(.name==\"Iteration\") | .configuration.iterations[] | select(.title==\$title) | .id" <<<"$ITERATION_DATA")
-
-if [[ -z "$ITERATION_FIELD_ID" || "$ITERATION_FIELD_ID" == "null" ]]; then
-  echo "Iteration field not found in Project #$PROJECT_NUMBER."
-  exit 1
-fi
-
-if [[ -z "$ITERATION_ID" || "$ITERATION_ID" == "null" ]]; then
-  echo "Iteration \"$ITERATION_TITLE\" not found in Project #$PROJECT_NUMBER."
-  exit 1
-fi
 
 gh project item-edit \
   --id "$ITEM_ID" \

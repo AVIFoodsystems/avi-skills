@@ -1,6 +1,6 @@
 ---
 name: github-project-iteration-issue
-version: 0.1.1
+version: 0.1.2
 description: Create GitHub issues and assign them to a specific Project v2 board iteration using a reusable `gh` CLI script. Use for LLM-driven story creation where the model provides the issue title/body and needs the item added to a project and placed into a named iteration.
 ---
 
@@ -23,6 +23,8 @@ Required (script exits with usage if missing):
 Optional:
 - `OWNER` (default: `AVIFoodsystems`)
 - `LABELS` — extras only; the script always adds `backlog` and `needs triage`
+
+Pass `--iteration current` to auto-select the iteration active today instead of a fixed title. The script validates the iteration exists **before** creating the issue (and lists the available iterations if not), so a rolled-off iteration name fails fast rather than leaving an orphaned, iteration-less issue.
 
 ## Preferred input methods
 - Use `--body-file -` and send the body via stdin for multi-line content.
