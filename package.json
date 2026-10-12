@@ -1,0 +1,23 @@
+{
+  "name": "avi-skills",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Portable AVI standards, skills and installation tooling",
+  "type": "module",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "build": "node tooling/cli.mjs build",
+    "validate": "node tooling/cli.mjs validate",
+    "skills:install": "node tooling/cli.mjs install",
+    "update": "node tooling/cli.mjs update",
+    "check": "node tooling/cli.mjs check",
+    "doctor": "node tooling/cli.mjs doctor",
+    "uninstall": "node tooling/cli.mjs uninstall",
+    "test": "node --test tests/*.test.mjs",
+    "verify": "npm run validate && npm test",
+    "release:check": "node tooling/evaluate.mjs --check"
+  },
+  "license": "UNLICENSED"
+}
