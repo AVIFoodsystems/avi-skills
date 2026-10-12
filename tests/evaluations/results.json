@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "releaseStatus": "preparation; behavioral support not declared",
+  "runs": [],
+  "probes": [
+    {
+      "date": "2026-10-12",
+      "client": "Codex CLI",
+      "version": "0.160.1",
+      "result": "--version and plugin --help available; model behavior untested"
+    },
+    {
+      "date": "2026-10-12",
+      "client": "Claude Code",
+      "version": "2.1.160",
+      "result": "--version succeeds with process-local ASDF_NODEJS_VERSION=22.20.0; default asdf launcher unconfigured; model behavior untested"
+    },
+    {
+      "date": "2026-10-12",
+      "client": "Kiro CLI",
+      "version": "2.29.1",
+      "result": "--version available; planned 2.29.0 baseline differs; model behavior untested"
+    },
+    {
+      "date": "2026-10-12",
+      "client": "Kiro CLI",
+      "version": "2.29.1",
+      "result": "Generated compatibility agent JSON accepted by kiro-cli agent validate; model behavior untested"
+    }
+  ],
+  "untested": [
+    {
+      "matrixId": "codex-cli-standalone",
+      "reason": "Required model sessions and scenario artifact review remain to be run"
+    },
+    {
+      "matrixId": "codex-ide-standalone",
+      "reason": "IDE version and behavioral sessions not recorded"
+    },
+    {
+      "matrixId": "claude-cli-plugin",
+      "reason": "Active launcher needs a Node version; plugin activation and behavioral sessions not recorded"
+    },
+    {
+      "matrixId": "claude-ide-standalone",
+      "reason": "IDE integration/version and sessions not recorded"
+    },
+    {
+      "matrixId": "kiro-cli-compat",
+      "reason": "Adapter packaging tested; custom-agent model sessions not recorded"
+    },
+    {
+      "matrixId": "kiro-ide-power",
+      "reason": "Power staging tested; IDE import and behavioral sessions not recorded"
+    },
+    {
+      "matrixId": "codex-native",
+      "reason": "Native capability probe is not activation or behavior evidence"
+    },
+    {
+      "matrixId": "kiro-current-cli",
+      "reason": "Current CLI V3 not available for recorded evaluation"
+    }
+  ],
+  "packagingPilot": {
+    "date": "2026-10-12",
+    "installations": [
+      "isolated avi-web working-tree context snapshot",
+      "non-Nx Angular/classic/form fixture",
+      "Nx isolated signal/exception fixture",
+      "iOS-only mobile fixture",
+      "legacy migration inventory fixture"
+    ],
+    "checks": [
+      "all required references installed",
+      "receipt checksum check passed for avi-web",
+      "no-probe doctor reported no issues for avi-web",
+      "Kiro file-resource agent validation exited 0"
+    ],
+    "behavioralStatus": "untested",
+    "sourceRepositoryUnchanged": true
+  },
+  "automatedChecks": {
+    "date": "2026-10-12",
+    "commands": [
+      "npm ci",
+      "npm run build",
+      "npm run verify",
+      "git diff --check"
+    ],
+    "testsPassed": 24,
+    "testsFailed": 0,
+    "archives": 9,
+    "generatedFiles": 40,
+    "rules": 32,
+    "legacyScript": "mocked gh only; no live issues",
+    "behavioralSupport": "not established by these checks",
+    "supplementaryValidator": "skill-creator quick_validate unavailable because PyYAML is not installed; repository-native frontmatter/manifests/link checks passed"
+  }
+}

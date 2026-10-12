@@ -1,7 +1,8 @@
 ---
 name: dotnet10-migration
 description: This skill should be used when the user asks to "plan a .NET 10 migration", "migrate an API to .NET 10", "create migration stories", "break a .NET Framework API migration into GitHub issues", or names an AVIFoodsystems legacy API (.NET Framework, .NET Core 2.1, etc.) to be migrated to the AVI gRPC .NET 10 stack. Produces a full set of GitHub Project iteration stories via the github-project-iteration-issue skill.
-version: 0.1.5
+metadata:
+  version: "0.1.5"
 ---
 
 # .NET 10 Migration Story Planner

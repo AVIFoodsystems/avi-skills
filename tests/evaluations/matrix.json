@@ -1,0 +1,12 @@
+{
+  "entries": [
+    { "id": "codex-cli-standalone", "client": "Codex CLI", "baselineVersion": "0.160.1", "mode": "standalone", "required": true, "invocations": ["explicit", "automatic"] },
+    { "id": "codex-ide-standalone", "client": "Codex IDE extension", "baselineVersion": "record-installed-version", "mode": "standalone", "required": true, "invocations": ["explicit", "automatic"] },
+    { "id": "claude-cli-plugin", "client": "Claude Code", "baselineVersion": "2.1.160", "mode": "native", "required": true, "invocations": ["explicit", "automatic"] },
+    { "id": "claude-ide-standalone", "client": "Claude IDE integration", "baselineVersion": "record-installed-version", "mode": "standalone", "required": true, "invocations": ["explicit", "automatic"] },
+    { "id": "kiro-cli-compat", "client": "Kiro CLI 2.x", "baselineVersion": "2.29.0", "mode": "compat", "required": true, "invocations": ["explicit", "automatic"] },
+    { "id": "kiro-ide-power", "client": "Kiro IDE", "baselineVersion": "record-installed-version", "mode": "native", "required": true, "invocations": ["explicit", "automatic"] },
+    { "id": "codex-native", "client": "Plugin-capable Codex", "baselineVersion": "record-installed-version", "mode": "native", "required": false, "invocations": ["explicit", "automatic"] },
+    { "id": "kiro-current-cli", "client": "Kiro CLI V3", "baselineVersion": "record-installed-version", "mode": "standalone", "required": false, "invocations": ["explicit", "automatic"] }
+  ]
+}

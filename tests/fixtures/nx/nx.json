@@ -1,0 +1,10 @@
+{
+  "defaultBase": "main",
+  "plugins": [],
+  "generators": {
+    "@nx/angular:library": {
+      "buildable": false,
+      "unitTestRunner": "jest"
+    }
+  }
+}

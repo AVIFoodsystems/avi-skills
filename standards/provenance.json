@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "repository": "https://github.com/AVIFoodsystems/avi-web",
+  "sourceCommit": "e01ea91dc2e1ec9f960edac5828199c1375a78a6",
+  "extractedAt": "2026-10-12",
+  "note": "Extracted from working-tree documentation; hashes identify exact inputs even if not committed. Source facts remain in avi-web.",
+  "files": {
+    "docs/architecture/angular/ANGULAR_CODING_STANDARDS.md": "21b5be35bf33745db4ee402b4d4944e90a2de0837adc68a4f6db5339f0c17c2d",
+    "docs/architecture/angular/ANGULAR_CODING_STANDARDS_RECOMMENDATIONS.md": "2737017fe7eb1fdbe68b4edf4b44f959aae310c20f255d04b388124f8a3c88f3",
+    "docs/architecture/angular/NEW_PROJECT_SETUP_GUIDE.md": "6e1d4539da3727fd228341611ff0f57f354ddaf00b68944ccf305e2297ffa527",
+    "docs/architecture/angular/README.md": "9684d8d8bd505f28ee7ad3f2ee6ca0b9113e35fcd8e0a0204d6fbb0f84fd8a44",
+    "docs/architecture/ionic-capacitor/MOBILE_DEVELOPMENT.md": "4240b1f97c8993cf26e8b03d3fc6ab9ec1d5b615a9684ed7211d37ea8e134da5",
+    "docs/architecture/ionic-capacitor/README.md": "d58b65cc10de61a8e8b17250a320044c62a8889d41179b52837293ab2b0dfc07",
+    "docs/architecture/ngrx/NAMING_CONVENTIONS.md": "7a7b44d15bca44e4604db8ee183b16822a9c4fd085e54cba3e5537c0a3fcd5b4",
+    "docs/architecture/ngrx/README.md": "5a6d46b5c50794e231fe5871c8a72bae9828809a695c986ba55a57366819ec8c",
+    "docs/architecture/ngrx/RECOMMENDATIONS.md": "a8ba071116395eae21394fe0a20df6612758e05c1d2293083c3fc715b124dfd5",
+    "docs/architecture/ngrx/SIGNAL_STORE.md": "e859fd71296ff5802d3e84a061195baaf85fa89e22efaf77efa4f73bd04faa3f",
+    "docs/architecture/ngrx/STATE_MANAGEMENT.md": "231247ef13c8aa7fc9e18d21a5e8f0ec38ed7d8cb7152a9045a02885704c80b0",
+    "docs/architecture/ngrx/TESTING.md": "d1da1c4e06f3f6697b76c046bffe711bf6e81e70e57bbd21bb2e7c065bac90a6",
+    "docs/architecture/nx/PROJECT_SETUP_GUIDE.md": "f065cf836557ae959390bd25eefa46ee2e8ba71d3bcecdea81e24fe400f25ea5",
+    "docs/architecture/nx/README.md": "f537d38946b248b6e56aadd850eca06b905c5dd1f60ace45b825ade9c90bdf6b",
+    "docs/architecture/nx/RECOMMENDATIONS.md": "fc15e1116cb5d9444b4eecd195e066fe9e97139055418e2cfdebda80c39ad8d2",
+    "docs/architecture/nx/RUNNING_TASKS.md": "0439eccf9eca3f97ee635cc8e1fc4f6c36c3f168f83a018656074ab79240e0ec",
+    "docs/architecture/nx/WORKSPACE_STANDARDS.md": "8387996f0688173bd10737af8b6badfc0b850d8a03ee6f3773d8206c79f0f11c"
+  }
+}

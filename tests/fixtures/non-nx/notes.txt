@@ -1,0 +1,1 @@
+Documentation exampple for the spelling evaluation.
