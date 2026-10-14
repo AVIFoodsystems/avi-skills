@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "release": "0.2.0",
+  "maintainer": "AVI repository maintainers",
+  "marketplace": {
+    "name": "avi-skills",
+    "owner": {
+      "name": "Applaud Technologies",
+      "email": "randall@applaud-technologies.com"
+    }
+  },
+  "packages": {
+    "avi-migration": {
+      "version": "0.1.5",
+      "description": "Plan AVI Foodsystems .NET 10 API migrations and create developer-ready GitHub Project iteration stories",
+      "author": {
+        "name": "Randall Sclapper",
+        "email": "randall@applaud-technologies.com"
+      },
+      "keywords": [
+        "avi",
+        "dotnet",
+        "migration",
+        "github-projects",
+        "stories"
+      ],
+      "output": ".",
+      "skills": [
+        "dotnet10-migration",
+        "github-project-iteration-issue"
+      ]
+    },
+    "avi-engineering": {
+      "version": "0.1.0",
+      "description": "Apply shared AVI Angular, Nx, NgRx, and Ionic/Capacitor standards and review architecture",
+      "author": {
+        "name": "Randall Sclapper",
+        "email": "randall@applaud-technologies.com"
+      },
+      "keywords": [
+        "avi",
+        "angular",
+        "nx",
+        "ngrx",
+        "ionic",
+        "capacitor"
+      ],
+      "output": "plugins/avi-engineering",
+      "skills": [
+        "avi-angular",
+        "avi-nx",
+        "avi-ngrx",
+        "avi-ionic-capacitor",
+        "avi-architecture-review"
+      ]
+    }
+  },
+  "skills": {
+    "dotnet10-migration": {
+      "source": "skill-sources/dotnet10-migration",
+      "dependencies": [
+        "github-project-iteration-issue"
+      ],
+      "references": []
+    },
+    "github-project-iteration-issue": {
+      "source": "skill-sources/github-project-iteration-issue",
+      "dependencies": [],
+      "references": []
+    },
+    "avi-angular": {
+      "source": "skill-sources/avi-angular",
+      "dependencies": [],
+      "references": [
+        "context",
+        "angular-components",
+        "angular-forms",
+        "angular-testing"
+      ]
+    },
+    "avi-nx": {
+      "source": "skill-sources/avi-nx",
+      "dependencies": [],
+      "references": [
+        "context",
+        "nx-workspace"
+      ]
+    },
+    "avi-ngrx": {
+      "source": "skill-sources/avi-ngrx",
+      "dependencies": [],
+      "references": [
+        "context",
+        "ngrx-selection",
+        "ngrx-classic",
+        "ngrx-signal"
+      ]
+    },
+    "avi-ionic-capacitor": {
+      "source": "skill-sources/avi-ionic-capacitor",
+      "dependencies": [],
+      "references": [
+        "context",
+        "mobile"
+      ]
+    },
+    "avi-architecture-review": {
+      "source": "skill-sources/avi-architecture-review",
+      "dependencies": [],
+      "references": [
+        "context",
+        "angular-components",
+        "angular-forms",
+        "angular-testing",
+        "nx-workspace",
+        "ngrx-selection",
+        "ngrx-classic",
+        "ngrx-signal",
+        "mobile",
+        "recommendations"
+      ]
+    }
+  },
+  "references": {
+    "context": {
+      "source": "standards/context.md",
+      "dependencies": []
+    },
+    "angular-components": {
+      "source": "standards/angular-components.md",
+      "dependencies": []
+    },
+    "angular-forms": {
+      "source": "standards/angular-forms.md",
+      "dependencies": []
+    },
+    "angular-testing": {
+      "source": "standards/angular-testing.md",
+      "dependencies": []
+    },
+    "nx-workspace": {
+      "source": "standards/nx-workspace.md",
+      "dependencies": []
+    },
+    "ngrx-selection": {
+      "source": "standards/ngrx-selection.md",
+      "dependencies": []
+    },
+    "ngrx-classic": {
+      "source": "standards/ngrx-classic.md",
+      "dependencies": [
+        "ngrx-selection"
+      ]
+    },
+    "ngrx-signal": {
+      "source": "standards/ngrx-signal.md",
+      "dependencies": [
+        "ngrx-selection"
+      ]
+    },
+    "mobile": {
+      "source": "standards/mobile.md",
+      "dependencies": [
+        "ngrx-selection"
+      ]
+    },
+    "recommendations": {
+      "source": "standards/recommendations.md",
+      "dependencies": []
+    }
+  }
+}

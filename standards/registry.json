@@ -1,0 +1,404 @@
+{
+  "schemaVersion": 1,
+  "extractedAt": "2026-10-12",
+  "rules": [
+    {
+      "id": "AVI-CONTEXT-001",
+      "status": "adopted",
+      "applicability": "All AVI engineering work",
+      "maintainer": "AVI repository maintainers",
+      "file": "context.md",
+      "sources": [
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/README.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#model-identifier-types",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ngrx/README.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ionic-capacitor/MOBILE_DEVELOPMENT.md"
+      ]
+    },
+    {
+      "id": "AVI-CONTEXT-002",
+      "status": "adopted",
+      "applicability": "Applying shared guidance",
+      "maintainer": "AVI repository maintainers",
+      "file": "context.md",
+      "sources": [
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/README.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#model-identifier-types",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ngrx/README.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ionic-capacitor/MOBILE_DEVELOPMENT.md"
+      ]
+    },
+    {
+      "id": "AVI-TYPES-001",
+      "status": "adopted",
+      "applicability": "Models and storage/API boundaries",
+      "maintainer": "AVI repository maintainers",
+      "file": "context.md",
+      "sources": [
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/README.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#model-identifier-types",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ngrx/README.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ionic-capacitor/MOBILE_DEVELOPMENT.md"
+      ]
+    },
+    {
+      "id": "AVI-ANGULAR-001",
+      "status": "adopted",
+      "applicability": "New or requested refactoring of Angular components",
+      "maintainer": "AVI repository maintainers",
+      "file": "angular-components.md",
+      "sources": [
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#3-naming-conventions",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#4-angular-component-standards",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#6-typescript-standards",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#11-security--accessibility"
+      ]
+    },
+    {
+      "id": "AVI-ANGULAR-002",
+      "status": "adopted",
+      "applicability": "New component files and templates",
+      "maintainer": "AVI repository maintainers",
+      "file": "angular-components.md",
+      "sources": [
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#3-naming-conventions",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#4-angular-component-standards",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#6-typescript-standards",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#11-security--accessibility"
+      ]
+    },
+    {
+      "id": "AVI-ANGULAR-003",
+      "status": "adopted",
+      "applicability": "Effects and subscriptions",
+      "maintainer": "AVI repository maintainers",
+      "file": "angular-components.md",
+      "sources": [
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#3-naming-conventions",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#4-angular-component-standards",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#6-typescript-standards",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#11-security--accessibility"
+      ]
+    },
+    {
+      "id": "AVI-ANGULAR-004",
+      "status": "adopted",
+      "applicability": "TypeScript implementation",
+      "maintainer": "AVI repository maintainers",
+      "file": "angular-components.md",
+      "sources": [
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#3-naming-conventions",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#4-angular-component-standards",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#6-typescript-standards",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#11-security--accessibility"
+      ]
+    },
+    {
+      "id": "AVI-A11Y-001",
+      "status": "adopted",
+      "applicability": "Interactive Angular UI",
+      "maintainer": "AVI repository maintainers",
+      "file": "angular-components.md",
+      "sources": [
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#3-naming-conventions",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#4-angular-component-standards",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#6-typescript-standards",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#11-security--accessibility"
+      ]
+    },
+    {
+      "id": "AVI-SECURITY-001",
+      "status": "adopted",
+      "applicability": "Rendering and configuration",
+      "maintainer": "AVI repository maintainers",
+      "file": "angular-components.md",
+      "sources": [
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#3-naming-conventions",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#4-angular-component-standards",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#6-typescript-standards",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#11-security--accessibility"
+      ]
+    },
+    {
+      "id": "AVI-FORMS-001",
+      "status": "adopted",
+      "applicability": "Maintaining forms",
+      "maintainer": "AVI repository maintainers",
+      "file": "angular-forms.md",
+      "sources": [
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/README.md#applying-skills-in-this-workspace",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#41-component-architecture",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#112-accessibility-standards"
+      ]
+    },
+    {
+      "id": "AVI-FORMS-002",
+      "status": "adopted",
+      "applicability": "Form implementation",
+      "maintainer": "AVI repository maintainers",
+      "file": "angular-forms.md",
+      "sources": [
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/README.md#applying-skills-in-this-workspace",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#41-component-architecture",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#112-accessibility-standards"
+      ]
+    },
+    {
+      "id": "AVI-TEST-001",
+      "status": "adopted",
+      "applicability": "Angular unit tests using AVI Jest conventions",
+      "maintainer": "AVI repository maintainers",
+      "file": "angular-testing.md",
+      "sources": [
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#7-testing-standards",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#8-e2e-testing-with-playwright--page-object-model",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ngrx/TESTING.md"
+      ]
+    },
+    {
+      "id": "AVI-TEST-002",
+      "status": "adopted",
+      "applicability": "Behavioral verification",
+      "maintainer": "AVI repository maintainers",
+      "file": "angular-testing.md",
+      "sources": [
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#7-testing-standards",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#8-e2e-testing-with-playwright--page-object-model",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ngrx/TESTING.md"
+      ]
+    },
+    {
+      "id": "AVI-E2E-001",
+      "status": "adopted",
+      "applicability": "Playwright E2E workflows",
+      "maintainer": "AVI repository maintainers",
+      "file": "angular-testing.md",
+      "sources": [
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#7-testing-standards",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md#8-e2e-testing-with-playwright--page-object-model",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ngrx/TESTING.md"
+      ]
+    },
+    {
+      "id": "AVI-NX-001",
+      "status": "adopted",
+      "applicability": "Repositories that use Nx",
+      "maintainer": "AVI repository maintainers",
+      "file": "nx-workspace.md",
+      "sources": [
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/nx/WORKSPACE_STANDARDS.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/nx/README.md#workspace-workflow",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/nx/PROJECT_SETUP_GUIDE.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/nx/RUNNING_TASKS.md"
+      ]
+    },
+    {
+      "id": "AVI-NX-002",
+      "status": "adopted",
+      "applicability": "Library public APIs",
+      "maintainer": "AVI repository maintainers",
+      "file": "nx-workspace.md",
+      "sources": [
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/nx/WORKSPACE_STANDARDS.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/nx/README.md#workspace-workflow",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/nx/PROJECT_SETUP_GUIDE.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/nx/RUNNING_TASKS.md"
+      ]
+    },
+    {
+      "id": "AVI-NX-003",
+      "status": "adopted",
+      "applicability": "Scaffolding Nx projects",
+      "maintainer": "AVI repository maintainers",
+      "file": "nx-workspace.md",
+      "sources": [
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/nx/WORKSPACE_STANDARDS.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/nx/README.md#workspace-workflow",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/nx/PROJECT_SETUP_GUIDE.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/nx/RUNNING_TASKS.md"
+      ]
+    },
+    {
+      "id": "AVI-NX-004",
+      "status": "adopted",
+      "applicability": "Executing workspace tasks",
+      "maintainer": "AVI repository maintainers",
+      "file": "nx-workspace.md",
+      "sources": [
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/nx/WORKSPACE_STANDARDS.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/nx/README.md#workspace-workflow",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/nx/PROJECT_SETUP_GUIDE.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/nx/RUNNING_TASKS.md"
+      ]
+    },
+    {
+      "id": "AVI-STATE-001",
+      "status": "adopted",
+      "applicability": "Existing state features",
+      "maintainer": "AVI repository maintainers",
+      "file": "ngrx-selection.md",
+      "sources": [
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ngrx/STATE_MANAGEMENT.md#state-management-strategy",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ngrx/STATE_MANAGEMENT.md#coexistence-and-optional-migration"
+      ]
+    },
+    {
+      "id": "AVI-STATE-002",
+      "status": "adopted",
+      "applicability": "Coexisting state architectures",
+      "maintainer": "AVI repository maintainers",
+      "file": "ngrx-selection.md",
+      "sources": [
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ngrx/STATE_MANAGEMENT.md#state-management-strategy",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ngrx/STATE_MANAGEMENT.md#coexistence-and-optional-migration"
+      ]
+    },
+    {
+      "id": "AVI-NGRX-001",
+      "status": "adopted",
+      "applicability": "Classic NgRx features",
+      "maintainer": "AVI repository maintainers",
+      "file": "ngrx-classic.md",
+      "sources": [
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ngrx/STATE_MANAGEMENT.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ngrx/NAMING_CONVENTIONS.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ngrx/TESTING.md"
+      ]
+    },
+    {
+      "id": "AVI-NGRX-002",
+      "status": "adopted",
+      "applicability": "Async effects",
+      "maintainer": "AVI repository maintainers",
+      "file": "ngrx-classic.md",
+      "sources": [
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ngrx/STATE_MANAGEMENT.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ngrx/NAMING_CONVENTIONS.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ngrx/TESTING.md"
+      ]
+    },
+    {
+      "id": "AVI-NGRX-003",
+      "status": "adopted",
+      "applicability": "NgRx naming",
+      "maintainer": "AVI repository maintainers",
+      "file": "ngrx-classic.md",
+      "sources": [
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ngrx/STATE_MANAGEMENT.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ngrx/NAMING_CONVENTIONS.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ngrx/TESTING.md"
+      ]
+    },
+    {
+      "id": "AVI-SIGNALS-001",
+      "status": "adopted",
+      "applicability": "Signal Store features",
+      "maintainer": "AVI repository maintainers",
+      "file": "ngrx-signal.md",
+      "sources": [
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ngrx/SIGNAL_STORE.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ngrx/NAMING_CONVENTIONS.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ngrx/TESTING.md"
+      ]
+    },
+    {
+      "id": "AVI-SIGNALS-002",
+      "status": "adopted",
+      "applicability": "Signal Store async boundaries",
+      "maintainer": "AVI repository maintainers",
+      "file": "ngrx-signal.md",
+      "sources": [
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ngrx/SIGNAL_STORE.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ngrx/NAMING_CONVENTIONS.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ngrx/TESTING.md"
+      ]
+    },
+    {
+      "id": "AVI-SIGNALS-003",
+      "status": "adopted",
+      "applicability": "Signal Store naming",
+      "maintainer": "AVI repository maintainers",
+      "file": "ngrx-signal.md",
+      "sources": [
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ngrx/SIGNAL_STORE.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ngrx/NAMING_CONVENTIONS.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ngrx/TESTING.md"
+      ]
+    },
+    {
+      "id": "AVI-MOBILE-001",
+      "status": "adopted",
+      "applicability": "Native/mobile work",
+      "maintainer": "AVI repository maintainers",
+      "file": "mobile.md",
+      "sources": [
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ionic-capacitor/README.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ionic-capacitor/MOBILE_DEVELOPMENT.md"
+      ]
+    },
+    {
+      "id": "AVI-MOBILE-002",
+      "status": "adopted",
+      "applicability": "Offline, auth and synchronization changes",
+      "maintainer": "AVI repository maintainers",
+      "file": "mobile.md",
+      "sources": [
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ionic-capacitor/README.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ionic-capacitor/MOBILE_DEVELOPMENT.md"
+      ]
+    },
+    {
+      "id": "AVI-MOBILE-003",
+      "status": "adopted",
+      "applicability": "Native verification",
+      "maintainer": "AVI repository maintainers",
+      "file": "mobile.md",
+      "sources": [
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ionic-capacitor/README.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ionic-capacitor/MOBILE_DEVELOPMENT.md"
+      ]
+    },
+    {
+      "id": "AVI-REC-001",
+      "status": "recommendation",
+      "applicability": "When explicitly evaluating operational conventions",
+      "maintainer": "AVI repository maintainers",
+      "file": "recommendations.md",
+      "sources": [
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS_RECOMMENDATIONS.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/nx/RECOMMENDATIONS.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ngrx/RECOMMENDATIONS.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ngrx/SIGNAL_STORE.md"
+      ]
+    },
+    {
+      "id": "AVI-REC-002",
+      "status": "recommendation",
+      "applicability": "When explicitly evaluating hooks or bundle analysis",
+      "maintainer": "AVI repository maintainers",
+      "file": "recommendations.md",
+      "sources": [
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS_RECOMMENDATIONS.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/nx/RECOMMENDATIONS.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ngrx/RECOMMENDATIONS.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ngrx/SIGNAL_STORE.md"
+      ]
+    },
+    {
+      "id": "AVI-UNVERIFIED-001",
+      "status": "unverified",
+      "applicability": "Interpreting legacy examples",
+      "maintainer": "AVI repository maintainers",
+      "file": "recommendations.md",
+      "sources": [
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS_RECOMMENDATIONS.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/nx/RECOMMENDATIONS.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ngrx/RECOMMENDATIONS.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/angular/ANGULAR_CODING_STANDARDS.md",
+        "https://github.com/AVIFoodsystems/avi-web/blob/main/docs/architecture/ngrx/SIGNAL_STORE.md"
+      ]
+    }
+  ]
+}

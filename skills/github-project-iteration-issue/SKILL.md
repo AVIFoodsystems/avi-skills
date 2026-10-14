@@ -1,7 +1,8 @@
 ---
 name: github-project-iteration-issue
-version: 0.1.2
 description: Create GitHub issues and assign them to a specific Project v2 board iteration using a reusable `gh` CLI script. Use for LLM-driven story creation where the model provides the issue title/body and needs the item added to a project and placed into a named iteration.
+metadata:
+  version: "0.1.2"
 ---
 
 ## Purpose

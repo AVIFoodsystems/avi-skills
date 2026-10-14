@@ -8,7 +8,13 @@
     {
       "name": "avi-migration",
       "source": "./",
-      "description": "Plan AVI .NET 10 API migrations and create developer-ready GitHub Project iteration stories",
+      "description": "Plan AVI Foodsystems .NET 10 API migrations and create developer-ready GitHub Project iteration stories",
+      "category": "workflow"
+    },
+    {
+      "name": "avi-engineering",
+      "source": "./plugins/avi-engineering",
+      "description": "Apply shared AVI Angular, Nx, NgRx, and Ionic/Capacitor standards and review architecture",
       "category": "workflow"
     }
   ]

@@ -1,3 +1,9 @@
 .claude/*.local.md
 *.swp
 .DS_Store
+
+node_modules/
+dist/
+.planning/
+.playwright-mcp/
+*.idea/**

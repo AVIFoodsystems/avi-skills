@@ -1,0 +1,17 @@
+{
+  "name": "avi-engineering",
+  "version": "0.1.0",
+  "description": "Apply shared AVI Angular, Nx, NgRx, and Ionic/Capacitor standards and review architecture",
+  "author": {
+    "name": "Randall Sclapper",
+    "email": "randall@applaud-technologies.com"
+  },
+  "keywords": [
+    "avi",
+    "angular",
+    "nx",
+    "ngrx",
+    "ionic",
+    "capacitor"
+  ]
+}

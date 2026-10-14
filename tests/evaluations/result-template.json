@@ -1,0 +1,20 @@
+{
+  "matrixId": "codex-cli-standalone",
+  "scenarioId": "classic",
+  "invocation": "explicit",
+  "status": "untested",
+  "clientVersion": "record exact version",
+  "model": "record actual model",
+  "installationMode": "standalone",
+  "date": "YYYY-MM-DD",
+  "reviewer": "record reviewer",
+  "loadedReferences": [],
+  "evidence": [],
+  "outcomes": {
+    "preserve-classic": false,
+    "string-id": false,
+    "inner-error-recovery": false,
+    "no-nx": false
+  },
+  "notes": "Record observable decisions and reviewed artifacts; do not mark passed until every required outcome is demonstrated."
+}

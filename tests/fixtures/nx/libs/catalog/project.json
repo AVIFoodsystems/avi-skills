@@ -1,0 +1,15 @@
+{
+  "name": "catalog",
+  "root": "libs/catalog",
+  "tags": [
+    "scope:catalog"
+  ],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "libs/catalog/jest.config.ts"
+      }
+    }
+  }
+}
